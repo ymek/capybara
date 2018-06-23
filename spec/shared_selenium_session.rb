@@ -74,7 +74,7 @@ RSpec.shared_examples "Capybara::Session" do |session, mode|
         session.visit('/with_js')
         session.fill_in('with_change_event', with: '')
         # click outside the field to trigger the change event
-        session.find(:css, 'body').click
+        session.find(:css, '#with_focus_event').click
         expect(session).to have_selector(:css, '.change_event_triggered', match: :one)
       end
     end
@@ -101,7 +101,7 @@ RSpec.shared_examples "Capybara::Session" do |session, mode|
                         with: 'some value',
                         fill_options: { clear: :backspace })
         # click outside the field to trigger the change event
-        session.find(:css, 'body').click
+        session.find(:css, '#with_focus_event').click
         expect(session.find(:css, '.change_event_triggered', match: :one)).to have_text 'some value'
       end
 
@@ -111,7 +111,7 @@ RSpec.shared_examples "Capybara::Session" do |session, mode|
                         with: '',
                         fill_options: { clear: :backspace })
         # click outside the field to trigger the change event
-        session.find(:css, 'body').click
+        session.find(:css, '#with_focus_event').click
         expect(session).to have_selector(:css, '.change_event_triggered', match: :one)
       end
 
