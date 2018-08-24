@@ -32,6 +32,16 @@ module Capybara::Selenium::Driver::MarionetteDriver
     # No modal was opened - page has refreshed - ignore
   end
 
+  def accept_modal(type, **options, &block)
+    # If an empty string is sent geckodriver doesn't clear the default setting
+    # workaround by sending <space>, <backspace>
+    if options[:with] == ''
+      options = options.dup
+      options[:with] = " \b"
+    end
+    super(type, **options, &block)
+  end
+
 private
 
   def build_node(native_node)
