@@ -18,10 +18,14 @@ module Capybara
 
       ##
       #
+      # @!method text(type)
       # @return [String]    The text of the document
       #
-      def text(type = nil, normalize_ws: false)
-        find(:xpath, '/html').text(type, normalize_ws: normalize_ws)
+      def text(type = nil, **options)
+        root = find(:xpath, '/html')
+        # The options are here to support the never documented, and deprecated :normalize_ws option
+        # TODO: remove options at next available chance
+        root.text(type, options)
       end
 
       ##

@@ -37,6 +37,13 @@ Capybara::SpecHelper.spec 'node' do
       @session.visit('/with_simple_html')
       expect(@session.all('/html')[0].text).to eq('Bar')
     end
+
+    it 'should have the :normalize_ws option deprecated' do
+      el = @session.all('//a')[0]
+      allow(el).to receive(:warn)
+      el.text(normalize_ws: false)
+      expect(el).to have_received(:warn).with(/The `:normalize_ws` option is deprecated/)
+    end
   end
 
   describe '#[]' do

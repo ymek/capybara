@@ -338,14 +338,16 @@ module Capybara
         matches_text_regexp?(node, regexp)
       end
 
-      def normalize_ws
+      def normalize_ws?
         options.fetch(:normalize_ws, session_options.default_normalize_ws)
       end
 
       def matches_text_regexp?(node, regexp)
-        text_visible = visible
-        text_visible = :all if text_visible == :hidden
-        !!node.text(text_visible, normalize_ws: normalize_ws).match(regexp)
+        tv = visible
+        tv = :all if tv == :hidden
+        text = node.text(tv)
+        text = text.gsub(/[[:space:]]+/, ' ').strip if normalize_ws?
+        text.match(regexp)
       end
     end
   end

@@ -43,6 +43,7 @@ module Capybara
 
       ##
       #
+      # @!method text(type = nil)
       # Retrieve the text of the element. If `Capybara.ignore_hidden_elements`
       # is `true`, which it is by default, then this will return only text
       # which is visible. The exact semantics of this may differ between
@@ -53,10 +54,16 @@ module Capybara
       # @param type [:all, :visible]  Whether to return only visible or all text
       # @return [String]              The text of the element
       #
-      def text(type = nil, normalize_ws: false)
+      def text(type = nil, **options)
         type ||= :all unless session_options.ignore_hidden_elements || session_options.visible_text_only
         txt = synchronize { type == :all ? base.all_text : base.visible_text }
-        normalize_ws ? txt.gsub(/[[:space:]]+/, ' ').strip : txt
+        if options.key?(:normalize_ws)
+          warn 'The `:normalize_ws` option is deprecated for the `text` method with no replacement.'
+          return txt.gsub(/[[:space:]]+/, ' ').strip if options[:normalize_ws]
+        else
+          raise ArgumentError("Unknown options passed to `Element#text` - #{options.keys.join(',')}") unless options.empty?
+        end
+        txt
       end
 
       ##

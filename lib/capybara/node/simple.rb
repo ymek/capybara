@@ -26,11 +26,18 @@ module Capybara
 
       ##
       #
+      # @!method text()
       # @return [String]    The text of the element
       #
-      def text(_type = nil, normalize_ws: false)
+      def text(_type = nil, **options)
         txt = native.text
-        normalize_ws ? txt.gsub(/[[:space:]]+/, ' ').strip : txt
+        if options.key?(:normalize_ws)
+          warn 'The `:normalize_ws` option is deprecated for the `text` method with no replacement.'
+          return txt.gsub(/[[:space:]]+/, ' ').strip if options[:normalize_ws]
+        else
+          raise ArgumentError("Unknown options passed to `text` - #{options.keys.join(',')}") unless options.empty?
+        end
+        txt
       end
 
       ##

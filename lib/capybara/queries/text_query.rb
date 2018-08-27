@@ -91,7 +91,9 @@ module Capybara
 
       def text(node: @node, query_type: @type)
         normalize_ws = options.fetch(:normalize_ws, session_options.default_normalize_ws)
-        node.text(query_type, normalize_ws: normalize_ws)
+        text = node.text(query_type)
+        text = text.gsub(/[[:space:]]+/, ' ').strip if normalize_ws
+        text
       end
 
       def default_type
