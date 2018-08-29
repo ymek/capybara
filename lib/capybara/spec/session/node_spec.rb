@@ -301,7 +301,7 @@ Capybara::SpecHelper.spec 'node' do
   end
 
   describe '#drag_to', requires: %i[js drag] do
-    it 'should drag and drop an object' do
+    it 'should drag and drop an object', :focus_ do
       @session.visit('/with_js')
       element = @session.find('//div[@id="drag"]')
       target = @session.find('//div[@id="drop"]')
@@ -309,7 +309,7 @@ Capybara::SpecHelper.spec 'node' do
       expect(@session).to have_xpath('//div[contains(., "Dropped!")]')
     end
 
-    it 'should drag and drop if scrolling is needed' do
+    it 'should drag and drop if scrolling is needed', :focus_ do
       @session.visit('/with_js')
       element = @session.find('//div[@id="drag_scroll"]')
       target = @session.find('//div[@id="drop_scroll"]')
@@ -370,13 +370,13 @@ Capybara::SpecHelper.spec 'node' do
       expect(radio).to be_checked
     end
 
-    it 'should allow modifiers', requires: [:js] do
+    it 'should allow modifiers', requires: [:js], focus_: true do
       @session.visit('/with_js')
       @session.find(:css, '#click-test').click(:shift)
       expect(@session).to have_link('Has been shift clicked')
     end
 
-    it 'should allow multiple modifiers', requires: [:js] do
+    it 'should allow multiple modifiers', requires: [:js], focus_: true do
       @session.visit('with_js')
       @session.find(:css, '#click-test').click(:control, :alt, :meta, :shift)
       # Selenium with Chrome on OSX ctrl-click generates a right click so just verify all keys but not click type
@@ -408,7 +408,7 @@ Capybara::SpecHelper.spec 'node' do
       expect(@session.find(:css, '#has-been-double-clicked')).to be_truthy
     end
 
-    it 'should allow modifiers', requires: [:js] do
+    it 'should allow modifiers', requires: [:js], focus_: true do
       @session.visit('/with_js')
       @session.find(:css, '#click-test').double_click(:alt)
       expect(@session).to have_link('Has been alt double clicked')
@@ -433,7 +433,7 @@ Capybara::SpecHelper.spec 'node' do
       expect(@session.find(:css, '#has-been-right-clicked')).to be_truthy
     end
 
-    it 'should allow modifiers', requires: [:js] do
+    it 'should allow modifiers', requires: [:js], focus_: true do
       @session.visit('/with_js')
       @session.find(:css, '#click-test').right_click(:meta)
       expect(@session).to have_link('Has been meta right clicked')
