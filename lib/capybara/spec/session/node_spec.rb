@@ -373,6 +373,8 @@ Capybara::SpecHelper.spec 'node' do
     it 'should allow modifiers', requires: [:js], focus_: true do
       @session.visit('/with_js')
       @session.find(:css, '#click-test').click(:shift)
+      el = @session.find(:link, 'Has been')
+      puts "clicked text is #{el.text}"
       expect(@session).to have_link('Has been shift clicked')
     end
 
@@ -380,6 +382,8 @@ Capybara::SpecHelper.spec 'node' do
       @session.visit('with_js')
       @session.find(:css, '#click-test').click(:control, :alt, :meta, :shift)
       # Selenium with Chrome on OSX ctrl-click generates a right click so just verify all keys but not click type
+      el = @session.find(:link, 'Has been')
+      puts "clicked text is #{el.text}"
       expect(@session).to have_link('alt control meta shift')
     end
 
@@ -411,6 +415,8 @@ Capybara::SpecHelper.spec 'node' do
     it 'should allow modifiers', requires: [:js], focus_: true do
       @session.visit('/with_js')
       @session.find(:css, '#click-test').double_click(:alt)
+      el = @session.find(:link, 'Has been')
+      puts "clicked text is #{el.text}"
       expect(@session).to have_link('Has been alt double clicked')
     end
 
@@ -436,6 +442,8 @@ Capybara::SpecHelper.spec 'node' do
     it 'should allow modifiers', requires: [:js], focus_: true do
       @session.visit('/with_js')
       @session.find(:css, '#click-test').right_click(:meta)
+      el = @session.find(:link, 'Has been')
+      puts "clicked text is #{el.text}"
       expect(@session).to have_link('Has been meta right clicked')
     end
 
