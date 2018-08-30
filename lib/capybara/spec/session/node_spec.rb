@@ -405,7 +405,7 @@ Capybara::SpecHelper.spec 'node' do
     end
   end
 
-  describe '#double_click', requires: [:js] do
+  describe '#double_click', requires: [:js], focus_: true do
     it 'should double click an element' do
       @session.visit('/with_js')
       @session.find(:css, '#click-test').double_click
@@ -414,10 +414,10 @@ Capybara::SpecHelper.spec 'node' do
 
     it 'should allow modifiers', requires: [:js], focus_: true do
       @session.visit('/with_js')
-      @session.find(:css, '#click-test').double_click(:alt)
+      @session.find(:css, '#click-test').double_click(:shift)
       el = @session.find(:link, 'Has been')
       puts "clicked text is #{el.text}"
-      expect(@session).to have_link('Has been alt double clicked')
+      expect(@session).to have_link('Has been shift double clicked')
     end
 
     it 'should allow to adjust the offset', requires: [:js] do
