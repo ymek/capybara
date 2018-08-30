@@ -414,13 +414,13 @@ Capybara::SpecHelper.spec 'node' do
 
     it 'should allow modifiers', requires: [:js], focus_: true do
       @session.visit('/with_js')
-      @session.find(:css, '#click-test').double_click(:shift)
+      @session.find(:css, '#click-test').double_click(:alt)
       sleep 1
       els = @session.all(:link, 'Has been')
       els.each do |el|
         puts "clicked text is #{el.text}"
       end
-      expect(@session).to have_link('Has been shift double clicked')
+      expect(@session).to have_link('Has been alt double clicked')
     end
 
     it 'should allow to adjust the offset', requires: [:js] do
