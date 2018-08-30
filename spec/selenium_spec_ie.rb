@@ -37,6 +37,10 @@ Capybara::SpecHelper.run_specs TestSessions::SeleniumIE, 'selenium', capybara_sk
     pending "IE 11 doesn't support date input types"
   when /#click_link_or_button with :disabled option happily clicks on links which incorrectly have the disabled attribute$/
     pending 'IE 11 obeys non-standard disabled attribute on anchor tag'
+  when /#right_click should allow modifiers$/
+    skip "Windows can't :meta click because :meta triggers start menu"
+  when /#click should allow multiple modifiers$/
+    skip "Windows can't :meta click because :meta triggers start menu"
   end
 end
 
@@ -44,4 +48,26 @@ RSpec.describe 'Capybara::Session with Internet Explorer', capybara_skip: skippe
   include Capybara::SpecHelper
   include_examples 'Capybara::Session', TestSessions::SeleniumIE, :selenium_ie
   include_examples Capybara::RSpecMatchers, TestSessions::SeleniumIE, :selenium_ie
+end
+
+RSpec.describe Capybara::Selenium::Node do
+  it '#right_click should allow modifiers', focus_: true do
+    session = TestSessions::SeleniumIE
+    session.visit('/with_js')
+    session.find(:css, '#click-test').right_click(:control)
+    el = session.find(:link, 'Has been')
+    puts "clicked text is #{el.text}"
+    expect(session).to have_link('Has been shift right clicked')
+  end
+
+  it '#click should allow multiple modifiers', focus_: true do
+    session = TestSessions::SeleniumIE
+    session.visit('with_js')
+    # IE triggers system behavior with :meta so can't use those here
+    session.find(:css, '#click-test').click(:ctrl, :shift, :alt)
+    el = session.find(:link, 'Has been')
+    puts "clicked text is #{el.text}"
+    # it also triggers a contextmenu event when control is held so don't check click type
+    expect(session).to have_link('Has been alt control shift')
+  end
 end
