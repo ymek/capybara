@@ -306,11 +306,7 @@ private
   def action_with_modifiers(click_options)
     actions = browser_action.move_to(native, *click_options.coords)
     modifiers_down(actions, click_options.keys)
-    # actions.pause('keyboard', 30)
-    # actions.pause('mouse', 30)
     yield actions
-    # actions.pause('keyboard', 30)
-    # actions.pause('mouse', 30)
     modifiers_up(actions, click_options.keys)
     actions.perform
   ensure
