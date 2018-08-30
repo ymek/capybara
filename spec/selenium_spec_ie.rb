@@ -68,9 +68,10 @@ RSpec.describe Capybara::Selenium::Node do
     expect(session).to have_link('Has been alt control shift clicked')
   end
 
-  it '#dobule_click should allow modifiers' do
-    @session.visit('/with_js')
-    @session.find(:css, '#click-test').double_click(:shift)
+  it '#double_click should allow modifiers' do
+    session = TestSessions::SeleniumIE
+    session.visit('/with_js')
+    session.find(:css, '#click-test').double_click(:shift)
     expect(@session).to have_link('Has been shift double clicked')
   end
 end

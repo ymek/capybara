@@ -370,7 +370,7 @@ Capybara::SpecHelper.spec 'node' do
       expect(radio).to be_checked
     end
 
-    it 'should allow modifiers', requires: [:js], focus_: true do
+    it 'should allow modifiers', requires: [:js] do
       @session.visit('/with_js')
       @session.find(:css, '#click-test').click(:shift)
       el = @session.find(:link, 'Has been')
@@ -405,7 +405,7 @@ Capybara::SpecHelper.spec 'node' do
     end
   end
 
-  describe '#double_click', requires: [:js], focus_: true do
+  describe '#double_click', requires: [:js] do
     it 'should double click an element' do
       @session.visit('/with_js')
       @session.find(:css, '#click-test').double_click
