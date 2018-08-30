@@ -412,14 +412,9 @@ Capybara::SpecHelper.spec 'node' do
       expect(@session.find(:css, '#has-been-double-clicked')).to be_truthy
     end
 
-    it 'should allow modifiers', requires: [:js], focus_: true do
+    it 'should allow modifiers', requires: [:js] do
       @session.visit('/with_js')
       @session.find(:css, '#click-test').double_click(:alt)
-      sleep 1
-      els = @session.all(:link, 'Has been')
-      els.each do |el|
-        puts "clicked text is #{el.text}"
-      end
       expect(@session).to have_link('Has been alt double clicked')
     end
 

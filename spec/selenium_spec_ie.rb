@@ -41,6 +41,8 @@ Capybara::SpecHelper.run_specs TestSessions::SeleniumIE, 'selenium', capybara_sk
     skip "Windows can't :meta click because :meta triggers start menu"
   when /#click should allow multiple modifiers$/
     skip "Windows can't :meta click because :meta triggers start menu"
+  when /#double_click should allow multiple modifiers$/
+    skip "Windows can't :alt double click due to being properties shortcut"
   end
 end
 
@@ -64,5 +66,11 @@ RSpec.describe Capybara::Selenium::Node do
     # IE triggers system behavior with :meta so can't use those here
     session.find(:css, '#click-test').click(:ctrl, :shift, :alt)
     expect(session).to have_link('Has been alt control shift clicked')
+  end
+
+  it '#dobule_click should allow modifiers' do
+    @session.visit('/with_js')
+    @session.find(:css, '#click-test').double_click(:shift)
+    expect(@session).to have_link('Has been shift double clicked')
   end
 end
