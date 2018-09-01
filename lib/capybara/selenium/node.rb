@@ -223,9 +223,12 @@ private
   end
 
   def scroll_if_needed
+    puts "in scroll if needed"
     yield
   rescue ::Selenium::WebDriver::Error::MoveTargetOutOfBoundsError
+    puts "scrolling to center"
     scroll_to_center
+    puts "scrolled to center"
     yield
   end
 
