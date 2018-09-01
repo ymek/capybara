@@ -3,6 +3,7 @@
 class Capybara::Selenium::MarionetteNode < Capybara::Selenium::Node
   def click(keys = [], **options)
     super
+    puts "after marionette click"
   rescue ::Selenium::WebDriver::Error::ElementNotInteractableError
     if tag_name == 'tr'
       warn 'You are attempting to click a table row which has issues in geckodriver/marionette - see https://github.com/mozilla/geckodriver/issues/1228. ' \
