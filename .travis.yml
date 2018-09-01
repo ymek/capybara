@@ -3,11 +3,11 @@ sudo: required
 dist: trusty
 services:
   - docker
-rvm:
-  - 2.5.1
-  - jruby-9.1.16.0
-gemfile:
-  - Gemfile
+# rvm:
+#   - 2.5.1
+#   - jruby-9.1.16.0
+# gemfile:
+#   - Gemfile
 env:
   global:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
@@ -35,57 +35,57 @@ cache:
 
 matrix:
   include:
-    - gemfile: Gemfile
-      rvm: 2.5.1
-      env: CAPYBARA_REMOTE=true
+    # - gemfile: Gemfile
+    #   rvm: 2.5.1
+    #   env: CAPYBARA_REMOTE=true
     - gemfile: Gemfile
       rvm: 2.5.1
       env:
         - CAPYBARA_REMOTE=true
         - CAPYBARA_FF=true
-    - gemfile: gemfiles/Gemfile.rspec-34
-      rvm: 2.3.7
-      env: CAPYBARA_FF=true
-      addons:
-        firefox: latest
-        apt:
-          packages:
-            - awesome
-    - gemfile: Gemfile
-      rvm: 2.5.1
-      env: HEADLESS=true
-    - gemfile: gemfiles/Gemfile.beta-versions
-      rvm: 2.5.1
-      env: CAPYBARA_FF=true
-      addons:
-        firefox: latest-beta
-        apt:
-          packages:
-            - awesome
-    - gemfile: gemfiles/Gemfile.edge-marionette
-      rvm: ruby-head
-      env:
-        - CAPYBARA_FF=true
-        - CAPYBARA_REMOTE=true
-    - gemfile: gemfiles/Gemfile.edge-marionette
-      rvm: ruby-head
-      env:
-        - CAPYBARA_REMOTE=true
-        - HEADLESS=true
-    - gemfile: gemfiles/Gemfile.edge-marionette
-      rvm: ruby-head
-      env: CAPYBARA_FF=true
-      addons:
-        firefox: latest-nightly
-        apt:
-          packages:
-            - awesome
-
-    - gemfile: Gemfile
-      rvm: 2.4.4
-      env: CAPYBARA_FF=true HEADLESS=true
-      addons:
-        firefox: latest
+    # - gemfile: gemfiles/Gemfile.rspec-34
+    #   rvm: 2.3.7
+    #   env: CAPYBARA_FF=true
+    #   addons:
+    #     firefox: latest
+    #     apt:
+    #       packages:
+    #         - awesome
+    # - gemfile: Gemfile
+    #   rvm: 2.5.1
+    #   env: HEADLESS=true
+    # - gemfile: gemfiles/Gemfile.beta-versions
+    #   rvm: 2.5.1
+    #   env: CAPYBARA_FF=true
+    #   addons:
+    #     firefox: latest-beta
+    #     apt:
+    #       packages:
+    #         - awesome
+    # - gemfile: gemfiles/Gemfile.edge-marionette
+    #   rvm: ruby-head
+    #   env:
+    #     - CAPYBARA_FF=true
+    #     - CAPYBARA_REMOTE=true
+    # - gemfile: gemfiles/Gemfile.edge-marionette
+    #   rvm: ruby-head
+    #   env:
+    #     - CAPYBARA_REMOTE=true
+    #     - HEADLESS=true
+    # - gemfile: gemfiles/Gemfile.edge-marionette
+    #   rvm: ruby-head
+    #   env: CAPYBARA_FF=true
+    #   addons:
+    #     firefox: latest-nightly
+    #     apt:
+    #       packages:
+    #         - awesome
+    #
+    # - gemfile: Gemfile
+    #   rvm: 2.4.4
+    #   env: CAPYBARA_FF=true HEADLESS=true
+    #   addons:
+    #     firefox: latest
   allow_failures:
     - gemfile: gemfiles/Gemfile.beta-versions
     - gemfile: gemfiles/Gemfile.edge-marionette
