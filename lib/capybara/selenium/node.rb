@@ -86,6 +86,7 @@ class Capybara::Selenium::Node < Capybara::Driver::Node
     click_options = ClickOptions.new(keys, options)
     return native.click if click_options.empty?
     scroll_if_needed do
+      puts "in click block"
       action_with_modifiers(click_options) do |action|
         click_options.coords? ? action.click : action.click(native)
       end
