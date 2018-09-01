@@ -383,7 +383,7 @@ Capybara::SpecHelper.spec 'node' do
       expect(@session).to have_link('alt control meta shift')
     end
 
-    it 'should allow to adjust the click offset', requires: [:js] do
+    it 'should allow to adjust the click offset', :focus_, requires: [:js] do
       @session.visit('with_js')
       @session.find(:css, '#click-test').click(x: 5, y: 5)
       link = @session.find(:link, 'has-been-clicked')
@@ -414,7 +414,7 @@ Capybara::SpecHelper.spec 'node' do
       expect(@session).to have_link('Has been alt double clicked')
     end
 
-    it 'should allow to adjust the offset', requires: [:js] do
+    it 'should allow to adjust the offset', :focus_, requires: [:js] do
       @session.visit('with_js')
       @session.find(:css, '#click-test').double_click(x: 10, y: 5)
       link = @session.find(:link, 'has-been-double-clicked')
@@ -439,7 +439,7 @@ Capybara::SpecHelper.spec 'node' do
       expect(@session).to have_link('Has been meta right clicked')
     end
 
-    it 'should allow to adjust the offset', requires: [:js] do
+    it 'should allow to adjust the offset', :focus_, requires: [:js] do
       @session.visit('with_js')
       @session.find(:css, '#click-test').right_click(x: 10, y: 10)
       link = @session.find(:link, 'has-been-right-clicked')
