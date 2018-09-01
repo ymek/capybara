@@ -384,6 +384,7 @@ Capybara::SpecHelper.spec 'node' do
     end
 
     it 'should allow to adjust the click offset', :focus_, requires: [:js] do
+      @session.current_window.resize_to(200,200)
       @session.visit('with_js')
       @session.find(:css, '#click-test').click(x: 5, y: 5)
       link = @session.find(:link, 'has-been-clicked')

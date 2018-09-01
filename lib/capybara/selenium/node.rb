@@ -85,9 +85,12 @@ class Capybara::Selenium::Node < Capybara::Driver::Node
   def click(keys = [], **options)
     click_options = ClickOptions.new(keys, options)
     return native.click if click_options.empty?
+
     scroll_if_needed do
       puts "in click block"
       action_with_modifiers(click_options) do |action|
+        puts "in action with modifiers block"
+        puts "coords? #{click_options.coords?}"
         click_options.coords? ? action.click : action.click(native)
       end
     end
@@ -308,11 +311,17 @@ private
   end
 
   def action_with_modifiers(click_options)
+    puts "in action with modifiers"
     actions = browser_action.move_to(native, *click_options.coords)
+    puts "added move_to"
     modifiers_down(actions, click_options.keys)
+    puts "after modifiers down"
     yield actions
+    puts "after yield"
     modifiers_up(actions, click_options.keys)
+    puts "after modifiers up"
     actions.perform
+    puts "after perform"
   ensure
     act = browser_action
     act.release_actions if act.respond_to?(:release_actions)
