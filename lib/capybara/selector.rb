@@ -195,11 +195,8 @@ Capybara.add_selector(:fillable_field) do
   label 'field'
 
   xpath(:allow_self) do |locator, **options|
-    xpath = if options[:allow_self]
-      XPath.descendant_or_self(:input, :textarea)
-    else
-      XPath.descendant(:input, :textarea)
-    end[!XPath.attr(:type).one_of('submit', 'image', 'radio', 'checkbox', 'hidden', 'file')]
+    scope = options[:allow_self] ? :"descendant-or-self" : :descendant
+    xpath = XPath.axis(scope, :input, :textarea)[!XPath.attr(:type).one_of('submit', 'image', 'radio', 'checkbox', 'hidden', 'file')]
     locate_field(xpath, locator, options)
   end
 
@@ -228,11 +225,8 @@ Capybara.add_selector(:radio_button) do
   label 'radio button'
 
   xpath(:allow_self) do |locator, **options|
-    xpath = if options[:allow_self]
-      XPath.descendant_or_self(:input)
-    else
-      XPath.descendant(:input)
-    end[XPath.attr(:type) == 'radio']
+    scope = options[:allow_self] ? :"descendant-or-self" : :descendant
+    xpath = XPath.axis(scope, :input)[XPath.attr(:type) == 'radio']
     locate_field(xpath, locator, options)
   end
 
@@ -248,11 +242,8 @@ end
 
 Capybara.add_selector(:checkbox) do
   xpath(:allow_self) do |locator, **options|
-    xpath = if options[:allow_self]
-      XPath.descendant_or_self(:input)
-    else
-      XPath.descendant(:input)
-    end[XPath.attr(:type) == 'checkbox']
+    scope = options[:allow_self] ? :"descendant-or-self" : :descendant
+    xpath = XPath.axis(scope, :input)[XPath.attr(:type) == 'checkbox']
     locate_field(xpath, locator, options)
   end
 
@@ -387,12 +378,9 @@ end
 
 Capybara.add_selector(:file_field) do
   label 'file field'
-  xpath(:allow_self) do |locator, options|
-    xpath = if options[:allow_self]
-      XPath.descendant_or_self(:input)
-    else
-      XPath.descendant(:input)
-    end[XPath.attr(:type) == 'file']
+  xpath(:allow_self) do |locator, **options|
+    scope = options[:allow_self] ? :"descendant-or-self" : :descendant
+    xpath = XPath.axis(scope, :input)[XPath.attr(:type) == 'file']
     locate_field(xpath, locator, options)
   end
 
