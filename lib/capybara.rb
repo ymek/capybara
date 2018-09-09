@@ -534,6 +534,7 @@ Capybara.configure do |config|
   config.predicates_wait = true
   config.default_normalize_ws = false
   config.allow_gumbo = true
+  config.default_plugin = { select: nil, unselect: nil, check: nil, uncheck: nil, choose: nil }
 end
 
 Capybara.register_driver :rack_test do |app|
