@@ -30,17 +30,16 @@ Capybara::SpecHelper.spec '#accept_prompt', requires: [:modals] do
     @session.accept_prompt with: 'the response' do
       @session.click_link('Open prompt')
     end
-    puts "response is : #{@session.find(:css, "a#open-prompt")['response']}"
+    # puts "response is : #{@session.find(:css, "a#open-prompt")['response']}"
     expect(@session).to have_xpath("//a[@id='open-prompt' and @response='the response']")
   end
 
   it 'should accept the prompt with a response when there is a default' do
-    puts @session.driver.browser.capabilities.as_json
+    # puts @session.driver.browser.capabilities.as_json
     @session.accept_prompt with: 'the response' do
       @session.click_link('Open defaulted prompt')
     end
-    sleep 1
-    puts "response is : #{@session.find(:css, "a#open-prompt")['response']}"
+    # puts "response is : #{@session.find(:css, "a#open-prompt")['response']}"
     expect(@session).to have_xpath("//a[@id='open-prompt-with-default' and @response='the response']")
   end
 
