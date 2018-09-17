@@ -55,7 +55,7 @@ Capybara::SpecHelper.spec '#accept_prompt', requires: [:modals] do
       @session.click_link('Open prompt')
     end
     if !@session.has_xpath?(%{//a[@id='open-prompt' and @response=concat("'the' ", '\\b "response"')]})
-      puts "TWTWTWTW: the text is: #{@session.find(:css, 'a#open-prompt')['response']}
+      puts "TWTWTWTW: the text is: #{@session.find(:css, 'a#open-prompt')['response']}"
     end
     expect(@session).to have_xpath(%{//a[@id='open-prompt' and @response=concat("'the' ", '\\b "response"')]}, wait: 10)
   end
@@ -65,7 +65,7 @@ Capybara::SpecHelper.spec '#accept_prompt', requires: [:modals] do
       @session.click_link('Open prompt')
     end
     if !@session.has_xpath?("//a[@id='open-prompt' and @response='matched']")
-      puts "TWTWTW: the text is: #{@session.find(:css, 'a#open-prompt')['response']}
+      puts "TWTWTW: the text is: #{@session.find(:css, 'a#open-prompt')['response']}"
     end
     expect(@session).to have_xpath("//a[@id='open-prompt' and @response='matched']")
   end
