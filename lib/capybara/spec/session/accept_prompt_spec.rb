@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Capybara::SpecHelper.spec '#accept_prompt', requires: [:modals] do
+Capybara::SpecHelper.spec '#accept_prompt', requires: [:modals], focus_: true do
   before do
     @session.visit('/with_js')
   end
@@ -30,6 +30,8 @@ Capybara::SpecHelper.spec '#accept_prompt', requires: [:modals] do
     @session.accept_prompt with: 'the response' do
       @session.click_link('Open prompt')
     end
+    sleep 1
+    puts "response is : #{@session.find(:css, "a#open-prompt")['response']}"
     expect(@session).to have_xpath("//a[@id='open-prompt' and @response='the response']")
   end
 
