@@ -61,6 +61,9 @@ Capybara::SpecHelper.spec '#accept_prompt', requires: [:modals] do
     @session.accept_prompt 'Prompt opened', with: 'matched' do
       @session.click_link('Open prompt')
     end
+    if !@session.has_xpath?("//a[@id='open-prompt' and @response='matched']")
+      puts "TWTWTW: the text is: #{@session.find(:css, 'a#open-prompt')['response']}
+    end
     expect(@session).to have_xpath("//a[@id='open-prompt' and @response='matched']")
   end
 
