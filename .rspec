@@ -1,5 +1,5 @@
 --color
 --require fuubar
---format Fuubar
+--format documentation
 --order random
 --seed 56703
