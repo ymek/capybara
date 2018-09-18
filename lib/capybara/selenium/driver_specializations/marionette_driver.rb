@@ -41,6 +41,21 @@ module Capybara::Selenium::Driver::MarionetteDriver
     handles.tap(&:pop).each { |fh| browser.switch_to.frame(fh) }
   end
 
+  def accept_modal(_type, **options)
+    yield if block_given?
+    modal = find_modal(options)
+
+    if options[:with]
+      puts "sending blank first"
+      modal.send_keys ""
+      modal.send_keys options[:with]
+    end
+
+    message = modal.text
+    modal.accept
+    message
+  end
+
 private
 
   def build_node(native_node)
