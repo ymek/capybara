@@ -116,5 +116,4 @@ before_script:
       fi;
     fi
 
-# script: "bundle exec rake travis"
-script: "bundle exec rspec --pattern ./spec/\*\{_spec_firefox_remote.rb\} --color --bisect"
+script: "bundle exec rake travis"

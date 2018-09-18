@@ -3,3 +3,4 @@
 --format documentation
 --order random
 --seed 56703
+--bisect
