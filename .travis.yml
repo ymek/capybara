@@ -116,4 +116,4 @@ before_script:
       fi;
     fi
 
-script: "bundle exec rake travis"
+script: "bundle exec rspec ./lib/capybara/spec/spec_helper.rb[1:2:7,1:17:19:7]"

@@ -3,4 +3,4 @@
 --format documentation
 --order random
 --seed 56703
---bisect
+--pattern ./spec/*{_spec_firefox_remote.rb}
