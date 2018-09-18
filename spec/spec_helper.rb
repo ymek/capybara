@@ -47,6 +47,6 @@ end
 
 RSpec.configure do |config|
   Capybara::SpecHelper.configure(config)
-  config.filter_run_including focus_: true unless ENV['CI']
+  config.filter_run_including focus_: true #unless ENV['CI']
   config.run_all_when_everything_filtered = true
 end
