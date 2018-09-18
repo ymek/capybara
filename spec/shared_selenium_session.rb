@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'selenium-webdriver'
 
-RSpec.shared_examples 'Capybara::Session' do |session, mode|
+RSpec.shared_examples 'Capybara::Session', :focus_ do |session, mode|
   let(:session) { session }
 
   context 'with selenium driver' do

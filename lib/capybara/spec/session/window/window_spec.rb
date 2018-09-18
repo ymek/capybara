@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Capybara::SpecHelper.spec Capybara::Window, requires: [:windows] do
+Capybara::SpecHelper.spec Capybara::Window, requires: [:windows], focus_: true do
   before do
     @window = @session.current_window
     @session.visit('/with_windows')

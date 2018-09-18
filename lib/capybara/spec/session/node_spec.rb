@@ -378,13 +378,13 @@ Capybara::SpecHelper.spec 'node' do
       expect(radio).to be_checked
     end
 
-    it 'should allow modifiers', requires: [:js] do
+    it 'should allow modifiers', requires: [:js], focus_: true do
       @session.visit('/with_js')
       @session.find(:css, '#click-test').click(:shift)
       expect(@session).to have_link('Has been shift clicked')
     end
 
-    it 'should allow multiple modifiers', requires: [:js] do
+    it 'should allow multiple modifiers', requires: [:js], focus_: true do
       @session.visit('with_js')
       @session.find(:css, '#click-test').click(:control, :alt, :meta, :shift)
       # Selenium with Chrome on OSX ctrl-click generates a right click so just verify all keys but not click type
@@ -459,7 +459,7 @@ Capybara::SpecHelper.spec 'node' do
     end
   end
 
-  describe '#send_keys', requires: [:send_keys] do
+  describe '#send_keys', requires: [:send_keys], focus_: true do
     it 'should send a string of keys to an element' do
       @session.visit('/form')
       @session.find(:css, '#address1_city').send_keys('Oceanside')
