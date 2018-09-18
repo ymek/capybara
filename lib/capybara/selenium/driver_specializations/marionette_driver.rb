@@ -42,6 +42,7 @@ module Capybara::Selenium::Driver::MarionetteDriver
   end
 
   def accept_modal(_type, **options)
+    return super
     yield if block_given?
     modal = find_modal(options)
 
