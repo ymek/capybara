@@ -459,7 +459,7 @@ Capybara::SpecHelper.spec 'node' do
     end
   end
 
-  describe '#send_keys', requires: [:send_keys] do
+  describe '#send_keys', requires: [:send_keys], focus2_: true do
     it 'should send a string of keys to an element' do
       @session.visit('/form')
       @session.find(:css, '#address1_city').send_keys('Oceanside')
@@ -476,6 +476,12 @@ Capybara::SpecHelper.spec 'node' do
       @session.visit('/form')
       @session.find(:css, '#address1_city').send_keys([:shift, 'o'], 'ceanside')
       expect(@session.find(:css, '#address1_city').value).to eq 'Oceanside'
+    end
+
+    it 'should hold modifers at top level' do
+      @session.visit('/form')
+      @session.find(:css, '#address1_city').send_keys('ocean', :shift, 'side')
+      expect(@session.find(:css, '#address1_city').value).to eq 'oceanSIDE'
     end
 
     it 'should generate key events', requires: %i[send_keys js] do
