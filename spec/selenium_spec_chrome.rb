@@ -49,6 +49,10 @@ Capybara::SpecHelper.run_specs TestSessions::Chrome, CHROME_DRIVER.to_s, capybar
   case example.metadata[:full_description]
   when /#click_link can download a file$/
     skip 'Need to figure out testing of file downloading on windows platform' if Gem.win_platform?
+  when 'Capybara::Session with chrome with selenium driver Capybara#Node#attach_file can attach a directory'
+    if CHROME_DRIVER == :selenium_chrome_headless
+      pending "Headless Chrome doesn't work with directory upload - https://bugs.chromium.org/p/chromedriver/issues/detail?id=2521&q=directory%20upload&colspec=ID%20Status%20Pri%20Owner%20Summary"
+    end
   end
 end
 

@@ -344,7 +344,6 @@ RSpec.shared_examples 'Capybara::Session' do |session, mode|
       end
     end
 
-
     context 'Windows' do
       it "can't close the primary window" do
         expect do
