@@ -71,8 +71,6 @@ private
 
   def _send_keys(keys, actions = browser_action, down_keys = ModifierKeysStack.new)
     case keys
-    when :space
-      _send_keys(' ', actions, down_keys) # https://github.com/mozilla/geckodriver/issues/846
     when :control, :left_control, :right_control,
          :alt, :left_alt, :right_alt,
          :shift, :left_shift, :right_shift,

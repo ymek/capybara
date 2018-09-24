@@ -484,6 +484,12 @@ Capybara::SpecHelper.spec 'node' do
       expect(@session.find(:css, '#address1_city').value).to eq 'oceanSIDE'
     end
 
+    it 'should process space' do
+      @session.visit('/form')
+      @session.find(:css, '#address1_city').send_keys('ocean', [:shift, :space, 'side'])
+      expect(@session.find(:css, '#address1_city').value).to eq 'ocean SIDE'
+    end
+
     it 'should generate key events', requires: %i[send_keys js] do
       @session.visit('/with_js')
       @session.find(:css, '#with-key-events').send_keys([:shift, 't'], [:shift, 'w'])
