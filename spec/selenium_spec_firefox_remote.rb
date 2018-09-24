@@ -69,8 +69,6 @@ Capybara::SpecHelper.run_specs TestSessions::RemoteFirefox, FIREFOX_REMOTE_DRIVE
             'if files are already set'
   when 'Capybara::Session selenium_firefox_remote #attach_file with multipart form should fire change once when uploading multiple files from empty'
     pending "FF < 62 doesn't support setting all files at once" if marionette_lt?(62, @session)
-  when 'Capybara::Session with remote firefox with selenium driver Capybara#Node#attach_file can attach a directory'
-    pending "Selenium remote doesn't support transferring a directory"
   end
 end
 
