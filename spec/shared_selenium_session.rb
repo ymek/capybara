@@ -334,6 +334,17 @@ RSpec.shared_examples 'Capybara::Session' do |session, mode|
       end
     end
 
+    describe 'Capybara#Node#attach_file' do
+      it 'can attach a directory' do
+        session.visit('/form')
+        @test_file_dir = File.expand_path('./fixtures', File.dirname(__FILE__))
+        session.attach_file('Directory Upload', @test_file_dir)
+        session.click_button('Upload Multiple')
+        expect(session.body).to include('5 | ') # number of files
+      end
+    end
+
+
     context 'Windows' do
       it "can't close the primary window" do
         expect do
