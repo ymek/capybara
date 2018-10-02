@@ -11,6 +11,20 @@ Capybara::SpecHelper.spec '#reset_session!' do
     expect(@session.body).not_to include('test_cookie')
   end
 
+  it 'removes all cookies', :focus_ do
+    domains = ['localhost', '127.0.0.1']
+    domains.each do |domain|
+      @session.visit("http://#{domain}:#{@session.server.port}/set_cookie")
+      @session.visit("http://#{domain}:#{@session.server.port}/get_cookie")
+      expect(@session).to have_content('test_cookie')
+    end
+    @session.reset_session!
+    domains.each do |domain|
+      @session.visit("http://#{domain}:#{@session.server.port}/get_cookie")
+      expect(@session.body).not_to include('test_cookie')
+    end
+  end
+
   it 'resets current url, host, path' do
     @session.visit '/foo'
     expect(@session.current_url).not_to be_empty
