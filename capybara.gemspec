@@ -32,6 +32,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('rack-test', ['>= 0.6.3'])
   s.add_runtime_dependency('xpath', ['~>3.1'])
 
+  s.add_development_dependency('coveralls')
   s.add_development_dependency('cucumber', ['>= 2.3.0'])
   s.add_development_dependency('erubi') # dependency specification needed by rbx
   s.add_development_dependency('fuubar', ['>= 1.0.0'])

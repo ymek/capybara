@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'coveralls'
+Coveralls.wear!
+
 require 'rspec/expectations'
 require 'capybara/spec/spec_helper'
 require 'webdrivers' if ENV['CI']
