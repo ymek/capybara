@@ -3,6 +3,12 @@
 require 'coveralls'
 Coveralls.wear!
 
+SimpleCov.start do
+  add_filter %r{/spec/}
+  add_filter 'lib/capybara/driver/base.rb'
+  add_filter 'lib/capybara/driver/node.rb'
+end
+
 require 'rspec/expectations'
 require 'capybara/spec/spec_helper'
 require 'webdrivers' if ENV['CI']
