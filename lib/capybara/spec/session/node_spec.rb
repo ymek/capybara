@@ -478,7 +478,7 @@ Capybara::SpecHelper.spec 'node' do
       expect(@session.find(:css, '#address1_city').value).to eq 'Oceanside'
     end
 
-    it 'should hold modifers at top level' do
+    it 'should hold modifiers at top level' do
       @session.visit('/form')
       @session.find(:css, '#address1_city').send_keys('ocean', :shift, 'side')
       expect(@session.find(:css, '#address1_city').value).to eq 'oceanSIDE'
