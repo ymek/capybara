@@ -75,7 +75,7 @@ RSpec.describe Capybara::Server do
     expect(@res2.body).to include('Hello Second Server')
   end
 
-  it 'should support SSL' do
+  it 'should support SSL', :focus_sep do
     begin
       key = File.join(Dir.pwd, 'spec', 'fixtures', 'key.pem')
       cert = File.join(Dir.pwd, 'spec', 'fixtures', 'certificate.pem')

@@ -29,7 +29,10 @@ module Capybara
       end
 
       def https_request(&block)
-        Net::HTTP.start(@host, @port, ssl_options, &block)
+        Net::HTTP.start(@host, @port, ssl_options) do |https|
+          https.verify_mode = OpenSSL::SSL::VERIFY_NONE
+          block.call(https)
+        end
       end
 
       def ssl_options
