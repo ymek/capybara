@@ -7,6 +7,18 @@ require 'rspec/shared_spec_matchers'
 
 ::Selenium::WebDriver::IE.driver_path = 'C:\Tools\WebDriver\IEDriverServer.exe' if ENV['CI']
 
+def selenium_host
+  ENV.fetch('SELENIUM_HOST', '192.168.56.102')
+end
+
+def selenium_port
+  ENV.fetch('SELENIUM_PORT', 4444)
+end
+
+def server_host
+  ENV.fetch('SERVER_HOST', '10.24.4.135')
+end
+
 Capybara.register_driver :selenium_ie do |app|
   # ::Selenium::WebDriver.logger.level = "debug"
   options = ::Selenium::WebDriver::IE::Options.new
@@ -21,7 +33,7 @@ end
 
 if ENV['REMOTE']
   Capybara.register_driver :selenium_ie do |app|
-    url = 'http://192.168.56.102:4444/wd/hub'
+    url = "http://#{selenium_host}:#{selenium_port}/wd/hub"
     options = ::Selenium::WebDriver::IE::Options.new
     options.require_window_focus = true
 
@@ -37,7 +49,7 @@ if ENV['REMOTE']
     end
   end
 
-  Capybara.server_host = '10.24.4.135'
+  Capybara.server_host = server_host
 end
 
 module TestSessions
