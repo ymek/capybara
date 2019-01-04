@@ -99,15 +99,16 @@ Capybara::SpecHelper.run_specs TestSessions::SeleniumIE, 'selenium', capybara_sk
     pending "Window 7 and 8.1 don't support 308 http status code"
   when /#scroll_to can scroll an element to the center of the viewport$/,
        /#scroll_to can scroll an element to the center of the scrolling element$/
-    pending " IE doesn't support ScrollToOptions"
+    pending "IE doesn't support ScrollToOptions"
   when /#attach_file with multipart form should fire change once for each set of files uploaded$/,
        /#attach_file with multipart form should fire change once when uploading multiple files from empty$/,
        /#attach_file with multipart form should not break when using HTML5 multiple file input uploading multiple files$/
     pending "IE requires all files be uploaded from same directory. Selenium doesn't provide that." if ENV['REMOTE']
   when %r{#attach_file with multipart form should send content type image/jpeg when uploading an image$}
     pending 'IE gets text/plain type for some reason'
-  when /#click should not retry clicking when wait is disabled$/
-    pending "IE driver doesn't error when clicking on covered elements, it just clicks the wrong element"
+  # Fixed in IEDriverServer 3.141.0.5
+  # when /#click should not retry clicking when wait is disabled$/
+  #   pending "IE driver doesn't error when clicking on covered elements, it just clicks the wrong element"
   when /#click should go to the same page if href is blank$/
     pending 'IE treats blank href as a parent request (against HTML spec)'
   end
