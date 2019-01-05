@@ -191,5 +191,11 @@ Capybara::SpecHelper.spec '#has_no_selector?' do
       expect(@session).not_to have_no_selector('//p//a', text: /re[dab]i/i, count: 1)
       expect(@session).to have_no_selector('//p//a', text: /Red$/)
     end
+
+    it 'should error when matching element exists' do
+      expect do
+        expect(@session).to have_no_selector('//h2', text: 'Header Class Test Five')
+      end.to raise_error RSpec::Expectations::ExpectationNotMetError
+    end
   end
 end

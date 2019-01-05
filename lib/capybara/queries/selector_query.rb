@@ -108,8 +108,9 @@ module Capybara
         expr = apply_expression_filters(@expression)
         expr = exact ? expr.to_xpath(:exact) : expr.to_s if expr.respond_to?(:to_xpath)
         expr = filtered_expression(expr)
-        if first_try? && options[:text].is_a?(String) && @resolved_node&.respond_to?(:session) && @resolved_node.session.driver.wait?
-          expr = "(#{expr})[#{XPath.contains(options[:text])}]"
+        if try_text_match_in_expression?
+          text_conditions = (options[:text] || options[:exact_text]).split.map { |txt| "[#{XPath.contains(txt)}]" }.join
+          expr = "(#{expr})#{text_conditions}"
         end
         expr
       end
@@ -143,6 +144,10 @@ module Capybara
       end
 
     private
+
+      def try_text_match_in_expression?
+        first_try? && (options[:text] || options[:exact_text]).is_a?(String) && @resolved_node&.respond_to?(:session) && @resolved_node.session.driver.wait?
+      end
 
       def first_try?
         @resolved_count == 1
