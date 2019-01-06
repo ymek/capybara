@@ -325,8 +325,12 @@ private
     each_key(keys) { |key| actions.key_up(key) }
   end
 
+  def browser
+    driver.browser
+  end
+
   def browser_action
-    driver.browser.action
+    browser.action
   end
 
   def each_key(keys)

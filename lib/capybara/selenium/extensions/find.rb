@@ -3,18 +3,19 @@
 module Capybara
   module Selenium
     module Find
-      def find_xpath(selector, with_visibility = false)
-        find_by(:xpath, selector, with_visibility)
+      def find_xpath(selector, with_visibility: false, texts: [])
+        find_by(:xpath, selector, with_visibility: with_visibility, texts: [])
       end
 
-      def find_css(selector, with_visibility = false)
-        find_by(:css, selector, with_visibility)
+      def find_css(selector, with_visibility: false, texts: [])
+        find_by(:css, selector, with_visibility: with_visibility, texts: texts)
       end
 
     private
 
-      def find_by(format, selector, with_visibility)
+      def find_by(format, selector, with_visibility:, texts:)
         els = find_context.find_elements(format, selector)
+        els = filter_by_text(els, texts) if (els.size > 1) && !texts.empty?
         visibilities = if with_visibility && els.size > 1
           element_visibilities(els)
         else
@@ -24,10 +25,25 @@ module Capybara
       end
 
       def element_visibilities(elements)
-        execute_script(
-          format('return arguments[0].map(%<atom>s)', atom: browser.send(:bridge).send(:read_atom, 'isDisplayed')),
-          elements
-        )
+        es_context = self.respond_to?(:execute_script) ? self : driver
+        es_context.execute_script <<~JS, elements
+          return arguments[0].map(#{is_displayed_atom})
+        JS
+      end
+
+      def filter_by_text(elements, texts)
+        es_context = self.respond_to?(:execute_script) ? self : driver
+        es_context.execute_script <<~JS, elements, texts
+          var texts = arguments[1]
+          return arguments[0].filter(function(el){
+            var content = el.textContent.toLowerCase();
+            return texts.every(function(txt){ return content.includes(txt.toLowerCase()) });
+          })
+        JS
+      end
+
+      def is_displayed_atom
+        @is_displayed_atom ||= browser.send(:bridge).send(:read_atom, 'isDisplayed')
       end
     end
   end

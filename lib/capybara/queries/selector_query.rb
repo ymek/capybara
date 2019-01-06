@@ -108,10 +108,7 @@ module Capybara
         expr = apply_expression_filters(@expression)
         expr = exact ? expr.to_xpath(:exact) : expr.to_s if expr.respond_to?(:to_xpath)
         expr = filtered_expression(expr)
-        if try_text_match_in_expression?
-          text_conditions = (options[:text] || options[:exact_text]).split.map { |txt| "[#{XPath.contains(txt)}]" }.join
-          expr = "(#{expr})#{text_conditions}"
-        end
+        expr = "(#{expr})[#{xpath_text_conditions}]" if try_text_match_in_expression?
         expr
       end
 
@@ -145,6 +142,15 @@ module Capybara
 
     private
 
+      def text_fragments
+        text = (options[:text] || options[:exact_text])
+        text.is_a?(String) ? text.split : []
+      end
+
+      def xpath_text_conditions
+        text_conditions = (options[:text] || options[:exact_text]).split.map { |txt| XPath.contains(txt) }.reduce &:&
+      end
+
       def try_text_match_in_expression?
         first_try? && (options[:text] || options[:exact_text]).is_a?(String) && @resolved_node&.respond_to?(:session) && @resolved_node.session.driver.wait?
       end
@@ -172,14 +178,16 @@ module Capybara
 
       def find_nodes_by_selector_format(node, exact)
         if selector.format == :css
-          if (node.method(:find_css).arity == 2) && (visible != :all)
-            node.find_css(css, true)
+          if (node.method(:find_css).arity != 1) && (visible != :all)
+          # if visible != :all
+            node.find_css(css, with_visibility: true, texts: text_fragments)
           else
             node.find_css(css)
           end
         elsif selector.format == :xpath
-          if (node.method(:find_xpath).arity == 2) && (visible != :all)
-            node.find_xpath(xpath(exact), true)
+          if (node.method(:find_xpath).arity != 1) && (visible != :all)
+          # if visible != :all
+            node.find_xpath(xpath(exact), with_visibility: true)
           else
             node.find_xpath(xpath(exact))
           end

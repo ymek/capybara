@@ -56,6 +56,7 @@ Capybara::SpecHelper.spec '#has_selector?' do
   context 'with text' do
     it 'should discard all matches where the given string is not contained' do
       expect(@session).to have_selector('//p//a', text: 'Redirect', count: 1)
+      expect(@session).to have_selector(:css, 'p a', text: 'Redirect', count: 1)
       expect(@session).not_to have_selector('//p', text: 'Doesnotexist')
     end
 
