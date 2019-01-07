@@ -3,11 +3,11 @@
 module Capybara
   module Selenium
     module Find
-      def find_xpath(selector, with_visibility: false, texts: [])
+      def find_xpath(selector, with_visibility: false, texts: [], **_options)
         find_by(:xpath, selector, with_visibility: with_visibility, texts: [])
       end
 
-      def find_css(selector, with_visibility: false, texts: [])
+      def find_css(selector, with_visibility: false, texts: [], **_options)
         find_by(:css, selector, with_visibility: with_visibility, texts: texts)
       end
 

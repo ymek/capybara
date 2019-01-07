@@ -164,12 +164,12 @@ module Capybara
       end
 
       # @api private
-      def find_css(css)
+      def find_css(css, **_options)
         native.css(css)
       end
 
       # @api private
-      def find_xpath(xpath)
+      def find_xpath(xpath, **_options)
         native.xpath(xpath)
       end
 

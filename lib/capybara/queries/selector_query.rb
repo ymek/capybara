@@ -177,17 +177,19 @@ module Capybara
       end
 
       def find_nodes_by_selector_format(node, exact)
+        options = {}
+        options[:with_visibility] = true unless visible == :all
+        options[:texts] = text_fragments unless selector.format == :xpath
+
         if selector.format == :css
-          if (node.method(:find_css).arity != 1) && (visible != :all)
-          # if visible != :all
-            node.find_css(css, with_visibility: true, texts: text_fragments)
+          if (node.method(:find_css).arity != 1)
+            node.find_css(css, **options
           else
             node.find_css(css)
           end
         elsif selector.format == :xpath
-          if (node.method(:find_xpath).arity != 1) && (visible != :all)
-          # if visible != :all
-            node.find_xpath(xpath(exact), with_visibility: true)
+          if (node.method(:find_xpath).arity != 1)
+            node.find_xpath(xpath(exact), **options)
           else
             node.find_xpath(xpath(exact))
           end
