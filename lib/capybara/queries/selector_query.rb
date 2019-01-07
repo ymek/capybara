@@ -183,7 +183,7 @@ module Capybara
 
         if selector.format == :css
           if (node.method(:find_css).arity != 1)
-            node.find_css(css, **options
+            node.find_css(css, **options)
           else
             node.find_css(css)
           end
