@@ -148,11 +148,14 @@ module Capybara
       end
 
       def xpath_text_conditions
-        text_conditions = (options[:text] || options[:exact_text]).split.map { |txt| XPath.contains(txt) }.reduce &:&
+        (options[:text] || options[:exact_text]).split.map { |txt| XPath.contains(txt) }.reduce(&:&)
       end
 
       def try_text_match_in_expression?
-        first_try? && (options[:text] || options[:exact_text]).is_a?(String) && @resolved_node&.respond_to?(:session) && @resolved_node.session.driver.wait?
+        first_try? &&
+          (options[:text] || options[:exact_text]).is_a?(String) &&
+          @resolved_node&.respond_to?(:session) &&
+          @resolved_node.session.driver.wait?
       end
 
       def first_try?
@@ -182,13 +185,13 @@ module Capybara
         options[:texts] = text_fragments unless selector.format == :xpath
 
         if selector.format == :css
-          if (node.method(:find_css).arity != 1)
+          if node.method(:find_css).arity != 1
             node.find_css(css, **options)
           else
             node.find_css(css)
           end
         elsif selector.format == :xpath
-          if (node.method(:find_xpath).arity != 1)
+          if node.method(:find_xpath).arity != 1
             node.find_xpath(xpath(exact), **options)
           else
             node.find_xpath(xpath(exact))

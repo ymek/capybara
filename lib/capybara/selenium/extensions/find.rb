@@ -3,7 +3,7 @@
 module Capybara
   module Selenium
     module Find
-      def find_xpath(selector, with_visibility: false, texts: [], **_options)
+      def find_xpath(selector, with_visibility: false, **_options)
         find_by(:xpath, selector, with_visibility: with_visibility, texts: [])
       end
 
@@ -25,14 +25,14 @@ module Capybara
       end
 
       def element_visibilities(elements)
-        es_context = self.respond_to?(:execute_script) ? self : driver
+        es_context = respond_to?(:execute_script) ? self : driver
         es_context.execute_script <<~JS, elements
           return arguments[0].map(#{is_displayed_atom})
         JS
       end
 
       def filter_by_text(elements, texts)
-        es_context = self.respond_to?(:execute_script) ? self : driver
+        es_context = respond_to?(:execute_script) ? self : driver
         es_context.execute_script <<~JS, elements, texts
           var texts = arguments[1]
           return arguments[0].filter(function(el){
@@ -42,7 +42,7 @@ module Capybara
         JS
       end
 
-      def is_displayed_atom
+      def is_displayed_atom # rubocop:disable Naming/PredicateName
         @is_displayed_atom ||= browser.send(:bridge).send(:read_atom, 'isDisplayed')
       end
     end
