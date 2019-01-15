@@ -79,11 +79,17 @@ class Capybara::Selenium::Driver < Capybara::Driver::Base
   def needs_server?; true; end
 
   def execute_script(script, *args)
-    browser.execute_script(script, *native_args(args))
+    res = browser.execute_script(script, *native_args(args))
+    unless res.nil?
+      warn 'You are returning a value from `execute_script`. This is unsupported behavior' \
+           'and will stop working in the next minor version of Capybara' \
+           'If you want a returned value you should be using `evaluate_script`.'
+    end
+    res
   end
 
   def evaluate_script(script, *args)
-    result = execute_script("return #{script}", *args)
+    result = browser.execute_script("return #{script}", *native_args(args))
     unwrap_script_result(result)
   end
 
