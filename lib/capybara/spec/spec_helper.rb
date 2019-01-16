@@ -127,4 +127,16 @@ module Capybara
   end
 end
 
+RSpec.configure do |config|
+  config.before(:each) do
+    Capybara.default_max_wait_time = 0
+  end
+
+  %i[js modals windows].each do |cond|
+    config.before(:each, requires: cond) do
+      Capybara.default_max_wait_time = 1
+    end
+  end
+end
+
 Dir[File.dirname(__FILE__) + '/session/**/*.rb'].each { |file| require_relative file }
