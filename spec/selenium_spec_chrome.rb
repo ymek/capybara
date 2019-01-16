@@ -33,6 +33,19 @@ skipped_tests = %i[response_headers status_code trigger]
 
 $stdout.puts `#{Selenium::WebDriver::Chrome.driver_path} --version` if ENV['CI']
 
+RSpec.configure do |config|
+  config.before(:each) do
+    Capybara.default_max_wait_time = 0
+  end
+
+  %i[js modals windows].each do |cond|
+    config.before(:each, requires: cond) do
+      Capybara.default_max_wait_time = 1
+    end
+  end
+end
+
+
 Capybara::SpecHelper.run_specs TestSessions::Chrome, CHROME_DRIVER.to_s, capybara_skip: skipped_tests do |example|
   case example.metadata[:full_description]
   when /#click_link can download a file$/
