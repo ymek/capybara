@@ -20,7 +20,8 @@ module Capybara
       #
       # @return [String]    The text of the document
       #
-      def text(type = nil, normalize_ws: false)
+      def text(type = nil, normalize_ws: nil)
+        normalize_ws = normalize_ws.nil? ? session_options.default_normalize_ws : normalize_ws
         find(:xpath, '/html').text(type, normalize_ws: normalize_ws)
       end
 

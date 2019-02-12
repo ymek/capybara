@@ -28,7 +28,8 @@ module Capybara
       #
       # @return [String]    The text of the element
       #
-      def text(_type = nil, normalize_ws: false)
+      def text(_type = nil, normalize_ws: nil)
+        normalize_ws = normalize_ws.nil? ? session_options.default_normalize_ws : normalize_ws
         txt = native.text
         normalize_ws ? txt.gsub(/[[:space:]]+/, ' ').strip : txt
       end
